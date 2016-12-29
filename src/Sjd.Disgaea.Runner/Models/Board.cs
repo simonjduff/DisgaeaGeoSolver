@@ -33,7 +33,11 @@ namespace Sjd.Disgaea.Runner.Models
         {
             var breakingPanel = _panels.Single(q => q.ContainsBlock(colour));
             Log($"[{breakingPanel.Colour}] breaking {colour}");
-            var matchingPanel = _panels.SingleOrDefault(q => q.Colour == colour);
+
+            _panels.Remove(breakingPanel);
+
+            var matchingPanel = _panels
+                .SingleOrDefault(q => q.Colour == colour);
 
             breakingPanel.BreakBlock(colour, matchingPanel);
 
@@ -41,8 +45,6 @@ namespace Sjd.Disgaea.Runner.Models
             {
                 throw new Exception("Broke the panel but it still has blocks");
             }
-
-            _panels.Remove(breakingPanel);
 
             var nextBlock = matchingPanel?.BlocksToBreak.FirstOrDefault();
             if (nextBlock != null)
