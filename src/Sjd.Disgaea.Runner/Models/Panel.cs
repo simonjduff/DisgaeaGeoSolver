@@ -1,5 +1,6 @@
 namespace Sjd.Disgaea.Runner.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     public class Panel
@@ -9,6 +10,8 @@ namespace Sjd.Disgaea.Runner.Models
             Colour = colour;
             _blocks = blocks.Select(q => new Block(q)).ToList();
         }
+
+        public Action<string> Log = (message) => {};
 
         private readonly List<Block> _blocks;
         public Colour Colour{get;}
@@ -26,6 +29,7 @@ namespace Sjd.Disgaea.Runner.Models
 
             if (matchingPanel != null)
             {
+                Log($"\t[{Colour}] -> [{matchingPanel.Colour}]: {string.Join(" ", Blocks.Select(q => q.BlockColour))}");
                 matchingPanel.AddBlocks(Blocks);
             }
 
