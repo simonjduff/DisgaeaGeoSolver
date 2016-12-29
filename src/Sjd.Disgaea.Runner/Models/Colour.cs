@@ -4,6 +4,8 @@ namespace Sjd.Disgaea.Runner.Models
     {
         Clear,
         Red,
-        Blue
+        Blue,
+        Yellow,
+        Green
     }
 }
