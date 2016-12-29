@@ -16,6 +16,7 @@
 
             // Then no blocks remain
             Assert.Equal(0, board.PanelCount);
+            Assert.Equal(0, board.BlockCount);
         }
     }
 }

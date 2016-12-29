@@ -14,11 +14,10 @@ namespace Sjd.Disgaea.Runner.Models
 
         public void Break(Colour colour)
         {
-            Console.WriteLine($"Breaking {colour}");
             var breakingPanel = _panels.Single(q => q.ContainsBlock(colour));
             var matchingPanel = _panels.SingleOrDefault(q => q.Colour == colour);
 
-            breakingPanel.MoveBlocksToPanel(matchingPanel);
+            breakingPanel.BreakBlock(colour, matchingPanel);
 
             if (!breakingPanel.Empty)
             {
@@ -26,9 +25,16 @@ namespace Sjd.Disgaea.Runner.Models
             }
 
             _panels.Remove(breakingPanel);
+
+            var nextBlock = matchingPanel?.BlocksToBreak.FirstOrDefault();
+            if (nextBlock != null)
+            {
+                Break(nextBlock.BlockColour);
+            }
         }
 
-        public int PanelCount => _panels.Count(q => !q.Empty);
-        public IEnumerable<Panel> PanelsRemaining => _panels.Where(q => !q.Empty);
+        public int PanelCount => _panels.Count();
+        public IEnumerable<Panel> PanelsRemaining => _panels;
+        public int BlockCount => _panels.SelectMany(q => q.Blocks).Count();
     }
 }

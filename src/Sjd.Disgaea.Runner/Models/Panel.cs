@@ -16,13 +16,17 @@ namespace Sjd.Disgaea.Runner.Models
         public IEnumerable<Block> Blocks => _blocks;
         public void AddBlocks(IEnumerable<Block> blocks)
         {
+            blocks.ToList().ForEach(q => q.QueuedToBreak = true);
             _blocks.AddRange(blocks);
         }
-        public void MoveBlocksToPanel(Panel panel)
+        public IEnumerable<Block> BlocksToBreak => _blocks.Where(q => q.QueuedToBreak);
+        public void BreakBlock(Colour blockColour, Panel matchingPanel)
         {
-            if (panel != null)
+            _blocks.Remove(_blocks.Single(q => q.BlockColour == blockColour));
+
+            if (matchingPanel != null)
             {
-                panel.AddBlocks(Blocks);
+                matchingPanel.AddBlocks(Blocks);
             }
 
             _blocks.Clear();

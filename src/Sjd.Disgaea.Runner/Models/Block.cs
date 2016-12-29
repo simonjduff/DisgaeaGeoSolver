@@ -8,5 +8,6 @@ namespace Sjd.Disgaea.Runner.Models
         }
 
         public Colour BlockColour{get;}
+        public bool QueuedToBreak{get; set;}
     }
 }
